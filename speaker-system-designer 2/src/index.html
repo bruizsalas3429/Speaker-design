@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'; img-src 'self' data:;">
+  <title>Speaker System Designer</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand-mark">♫</div>
+    <div><strong>Speaker System Designer</strong><small>Herramienta geométrica de distribución de altavoces</small></div>
+    <span class="offline">● Funciona sin conexión</span>
+  </header>
+
+  <main class="layout">
+    <section class="panel controls">
+      <div class="eyebrow">PARÁMETROS DEL SISTEMA</div>
+      <h1>Calculadora de separación</h1>
+      <p class="muted">Define la distancia de escucha, la cobertura y la cantidad de altavoces.</p>
+
+      <label for="distance">Distancia de primera escucha <span>(metros)</span></label>
+      <div class="input-wrap"><input id="distance" type="number" min="0.01" max="1000" step="0.1" value="3"><b>m</b></div>
+
+      <label for="angle">Ángulo de cobertura total <span>(grados)</span></label>
+      <div class="input-wrap"><input id="angle" type="number" min="0.1" max="180" step="1" value="90"><b>°</b></div>
+      <div class="presets" aria-label="Ángulos frecuentes">
+        <button data-angle="60">60°</button><button data-angle="90" class="selected">90°</button><button data-angle="100">100°</button><button data-angle="120">120°</button><button data-angle="150">150°</button>
+      </div>
+
+      <label for="count">Cantidad de altavoces <span>(1–64)</span></label>
+      <div class="count-row"><button id="minus" aria-label="Restar altavoz">−</button><input id="count" type="number" min="1" max="64" step="1" value="2"><button id="plus" aria-label="Agregar altavoz">+</button></div>
+
+      <div class="results">
+        <div class="result-label">SEPARACIÓN ENTRE ALTAVOCES CONSECUTIVOS</div>
+        <div class="result"><strong id="spacing">4,24</strong><span>m</span></div>
+        <div class="subresult" id="spacingCm">424,26 cm</div>
+        <hr>
+        <div class="result-label">SEPARACIÓN TOTAL ENTRE EXTREMOS</div>
+        <div class="result"><strong id="total">4,24</strong><span>m</span></div>
+        <div class="subresult" id="totalCm">424,26 cm · 1 intervalo</div>
+      </div>
+
+      <div class="formula">
+        <div class="result-label">FÓRMULAS</div>
+        <div class="equation">S = 2D · sen(θ / 2)</div>
+        <div class="equation small">S<sub>T</sub> = (N − 1) · S</div>
+        <p>S: separación individual · D: distancia · θ: cobertura · N: número de altavoces.</p>
+      </div>
+      <div id="validation" class="validation" role="alert"></div>
+      <div class="actions"><button id="reset" class="secondary">Restablecer</button><button id="export" class="primary">Exportar configuración</button></div>
+    </section>
+
+    <section class="right-column">
+      <section class="panel diagram-panel">
+        <div class="panel-heading"><div><div class="eyebrow">VISTA SUPERIOR</div><h2>Distribución del sistema</h2></div><span class="pill" id="speakerBadge">2 altavoces</span></div>
+        <div class="diagram-wrap"><svg id="diagram" viewBox="0 0 760 470" role="img" aria-label="Diagrama superior de altavoces y punto de escucha"></svg></div>
+        <div class="legend"><span><i class="dot blue"></i>Altavoces</span><span><i class="dot green"></i>Punto de primera escucha</span><span><i class="dot cone"></i>Cobertura ilustrativa</span></div>
+      </section>
+      <section class="panel note-panel">
+        <h2>Consideraciones técnicas</h2>
+        <ul>
+          <li>El cálculo supone altavoces alineados y con separación uniforme.</li>
+          <li>El ángulo ingresado se interpreta como ángulo total de cobertura, simétrico respecto al eje del altavoz.</li>
+          <li>La separación total se mide entre los centros del primer y último altavoz.</li>
+          <li>La superposición real depende de la directividad, orientación, altura, respuesta de frecuencia y acústica del recinto.</li>
+        </ul>
+        <p class="caution">Este cálculo es una referencia geométrica; no sustituye el diseño electroacústico ni las mediciones en terreno.</p>
+      </section>
+    </section>
+  </main>
+  <footer>Speaker System Designer · Versión 1.0.0</footer>
+  <script src="app.js"></script>
+</body>
+</html>
